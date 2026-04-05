@@ -60,6 +60,6 @@ jobs:
         path: .
     
     - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan -lock=false
+      run: terraform apply -lock=false -auto-approve tfplan
 
   #TEST
