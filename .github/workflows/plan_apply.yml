@@ -31,7 +31,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Plan
-      run: terraform plan -out=tfplan
+      run: terraform plan -out=tfplan -lock=false
 
     - name: Save Terraform Plan as artifact
       uses: actions/upload-artifact@v4
