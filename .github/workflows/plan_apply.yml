@@ -31,7 +31,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Plan
-      run: terraform plan -out=tfplan -lock=false
+      run: terraform plan -out=tfplan
 
     - name: Save Terraform Plan as artifact
       uses: actions/upload-artifact@v4
@@ -47,11 +47,16 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v4 
 
+    - name: Login to Azure via Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Install Terraform
       uses: hashicorp/setup-terraform@v4
 
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -reconfigure
 
     - name: Download Terraform Plan artifact
       uses: actions/download-artifact@v4
@@ -60,6 +65,6 @@ jobs:
         path: .
     
     - name: Terraform Apply
-      run: terraform apply -lock=false -auto-approve tfplan
+      run: terraform apply -auto-approve tfplan
 
   #TEST
